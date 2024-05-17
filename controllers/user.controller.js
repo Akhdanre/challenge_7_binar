@@ -106,18 +106,37 @@ module.exports = {
         }
     },
     updatePass: async (req, res, next) => {
-        let { email } = req.body
+        let { new_password, confirm_password } = req.body;
+        let { token } = req.query;
+        let { email } = jwt.verify(token, JWT_SECRET)
         try {
-            let userExist = await prisma.user.findFirst({ where: { email } })
-        } catch (error) {
+            let userExist = await prisma.user.findFirst({ where: { email } });
 
+            if (!userExist) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            if (new_password !== confirm_password) {
+                return res.status(400).json({ message: 'Passwords do not match' });
+            }
+
+            const hashedPassword = await bcrypt.hash(new_password, 10);
+
+            await prisma.user.update({
+                where: { id: userExist.id },
+                data: { password: hashedPassword },
+            });
+
+            return res.status(200).json({ message: 'Password updated successfully' });
+        } catch (error) {
+            sentry.captureException(error)
+            next(error)
         }
     },
-
     requestUpdatePass: async (req, res, next) => {
         const { email } = req.query
-        console.log(email)
-        let url = `${req.protocol}://${req.get('host')}/users/new-pass?email=${email}`;
+        let token = jwt.sign({ email }, JWT_SECRET)
+        let url = `${req.protocol}://${req.get('host')}/users/new-pass?token=${token}`;
         try {
             let html = await getHTML('verification.ejs', { reset_pass_url: url });
             await sendMail(email, 'Verification Email', html);

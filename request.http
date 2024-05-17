@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "email": "danakhdan12@gmail.com",
-    "password": "rahasia"
+    "password": "lorem"
 }
 ###
 GET   http://localhost:3000/users/whoAmI
