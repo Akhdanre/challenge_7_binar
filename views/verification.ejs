@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .verification-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .verification-container h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .verification-container p {
+            color: #666666;
+            margin-bottom: 30px;
+        }
+        .verification-container a.button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .verification-container a.button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <h1>Reset Password</h1>
+        <p>Apakah Anda mencoba melakukan reset password? Jika ya, maka tekan tombol di bawah. Jika tidak, maka abaikan.</p>
+        <a href="<%=reset_pass_url%>" class="button">Reset Password</a>
+    </div>
+</body>
+</html>

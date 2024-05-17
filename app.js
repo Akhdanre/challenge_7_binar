@@ -29,15 +29,25 @@ app.use('/users', usersRouter);
 Sentry.setupExpressErrorHandler(app);
 
 app.use(function (req, res, next) {
-  next(createError(404));
+  res.json({
+    status: "error",
+    message: "wrong way broo",
+    data: null
+  });
 });
 
 app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+
+
+  console.log(err)
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    status: "error",
+    message: "Internal Server Error",
+    data: null
+  });
 });
 
 module.exports = app;
