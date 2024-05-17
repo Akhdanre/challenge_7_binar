@@ -6,6 +6,20 @@ const jwt = require("jsonwebtoken")
 const { getHTML, sendMail } = require("../libs/nodemailer")
 const { JWT_SECRET } = process.env
 
+addNotification = async (userId, message) => {
+    await prisma.notification.create({
+        data: {
+            userId,
+            message
+        }
+    })
+}
+
+sendNotification = async (io, email, userId) => {
+    let notifications = await prisma.notification.findMany({ where: { userId } })
+    io.emit(`user`, notifications)
+}
+
 module.exports = {
     register: async (req, res, next) => {
         let { email, password, name } = req.body
@@ -122,12 +136,15 @@ module.exports = {
 
             const hashedPassword = await bcrypt.hash(new_password, 10);
 
-            await prisma.user.update({
+            let updateUser = await prisma.user.update({
                 where: { id: userExist.id },
                 data: { password: hashedPassword },
             });
+            const io = req.app.get('io');
+            addNotification(updateUser.id, "success change password")
+            sendNotification(io, updateUser.email, updateUser.id)
 
-            return res.status(200).json({ message: 'Password updated successfully' });
+            // return res.status(200).json({ message: 'Password updated successfully' });
         } catch (error) {
             sentry.captureException(error)
             next(error)

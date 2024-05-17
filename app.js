@@ -24,7 +24,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+app.set('io', io)
 app.use('/users', usersRouter);
+
 
 Sentry.setupExpressErrorHandler(app);
 
@@ -50,4 +65,7 @@ app.use(function (err, req, res, next) {
   });
 });
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
+});
