@@ -3,7 +3,7 @@ POST  http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "email": "e41211115@student.polije.ac.id",
+    "email": "danakhdan12@gmail.com",
     "password": "rahasia",
     "name" : "akhdan"
 }
@@ -14,14 +14,14 @@ Content-Type: application/json
 
 {
     "email": "danakhdan12@gmail.com",
-    "password": "lorem"
+    "password": "rahasia"
 }
 ###
 GET   http://localhost:3000/users/whoAmI
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6ImRhbmFraGRhbjEyQGdtYWlsLmNvbSIsIm5hbWUiOiJha2hkYW4iLCJpc192ZXJpZmllZCI6ZmFsc2UsInRva2VuIjpudWxsfSwiaWF0IjoxNzE1OTQzNjIwfQ.N9spnejkxZmY4Xmp4wEGt4S9LduYTwrMp6yEkF0KMsM
 
-###
-GET   http://localhost:3000/users/email-reset-pass
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6ImRhbmFraGRhbjEyQGdtYWlsLmNvbSIsIm5hbWUiOiJha2hkYW4iLCJpc192ZXJpZmllZCI6ZmFsc2UsInRva2VuIjpudWxsfSwiaWF0IjoxNzE1OTQzNjIwfQ.N9spnejkxZmY4Xmp4wEGt4S9LduYTwrMp6yEkF0KMsM
+# ###
+# GET   http://localhost:3000/users/email-reset-pass
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6ImRhbmFraGRhbjEyQGdtYWlsLmNvbSIsIm5hbWUiOiJha2hkYW4iLCJpc192ZXJpZmllZCI6ZmFsc2UsInRva2VuIjpudWxsfSwiaWF0IjoxNzE1OTQzNjIwfQ.N9spnejkxZmY4Xmp4wEGt4S9LduYTwrMp6yEkF0KMsM

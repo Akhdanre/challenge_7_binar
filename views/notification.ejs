@@ -59,6 +59,8 @@
         let notifications = document.getElementById('notification-list');
 
         socket.on('user', notif => {
+            notifications.innerHTML = '';
+
             notif.forEach(element => {
                 let item = document.createElement('li');
                 item.innerHTML = `<b>${element.message}</b>`;
