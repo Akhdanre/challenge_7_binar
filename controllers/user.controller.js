@@ -57,6 +57,9 @@ module.exports = {
                 })
             }
             delete newUser.password
+            const io = req.app.get('io');
+            addNotification(newUser.id, "success change password")
+            sendNotification(io, newUser.email, newUser.id)
             return res.status(200).json({
                 status: "Succes",
                 message: "Succes register new user",
