@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Notification</h2>
+        <ul id="notification-list">
+            <li>message 1</li>
+            <li>message 1</li>
+            <li>message 1</li>
+            <li>message 1</li>
+        </ul>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        let notifications = document.getElementById('notification-list');
+
+        socket.on('user', notif => {
+            notif.forEach(element => {
+                let item = document.createElement('li');
+                item.innerHTML = `<b>${element.message}</b>`;
+                notifications.appendChild(item);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

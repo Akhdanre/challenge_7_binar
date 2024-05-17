@@ -131,6 +131,8 @@ module.exports = {
             }
 
             if (new_password !== confirm_password) {
+                addNotification(updateUser.id, "password do not match")
+                sendNotification(io, updateUser.email, updateUser.id)
                 return res.status(400).json({ message: 'Passwords do not match' });
             }
 

@@ -30,15 +30,22 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('a user connected', socket.id);
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('user disconnected', socket.id);
   });
 });
 
+io.on('user', notif => {
+  console.log(notif)
+})
+
 app.set('io', io)
 app.use('/users', usersRouter);
+app.get('/notification', (req, res, next) =>{
+  res.render('notification')
+})
 
 
 Sentry.setupExpressErrorHandler(app);
@@ -67,5 +74,5 @@ app.use(function (err, req, res, next) {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`listening on *:${PORT}`);
+  console.log(`listening on *:${PORT}`);
 });
