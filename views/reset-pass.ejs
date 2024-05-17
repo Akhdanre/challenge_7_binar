@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: auto;
+    }
+
+    li {
+      background-color: #fff;
+      margin: 10px 0;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    li:hover {
+      background-color: #f1f1f1;
+    }
+
+    .notification-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #007bff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 16px;
+      margin-right: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Reset Password</h2>
+    <form method="post" action="/users/update/pass?token=<%=token%>">
+      <label for="new_password">New Password:</label>
+      <input type="password" id="new_password" name="new_password" required>
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password" required>
+      <button type="submit">Reset Password</button>
+    </form>
+  </div>
+  <div class="container">
+    <h2>Notification</h2>
+    <ul id="notification-list">
+      <li>message 1</li>
+      <li>message 1</li>
+      <li>message 1</li>
+      <li>message 1</li>
+    </ul>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io();
+    let notifications = document.getElementById('notification-list');
+
+    socket.on('user', notif => {
+      let item = document.createElement('li');
+      item.innerHTML = `<b>${notif.message}</b>`;
+      notifications.appendChild(item);
+    });
+  </script>
+</body>
+</html>

@@ -14,10 +14,18 @@ datasource db {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  email       String
-  password    String
-  name        String
-  is_verified Boolean @default(false)
-  token       String?
+  id           Int            @id @default(autoincrement())
+  email        String
+  password     String
+  name         String
+  is_verified  Boolean        @default(false)
+  token        String?
+  Notification Notification[]
+}
+
+model Notification {
+  id      Int    @id @default(autoincrement())
+  user_id User   @relation(fields: [userId], references: [id])
+  userId  Int
+  message String
 }

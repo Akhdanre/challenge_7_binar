@@ -24,20 +24,48 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+app.set('io', io)
 app.use('/users', usersRouter);
+
 
 Sentry.setupExpressErrorHandler(app);
 
 app.use(function (req, res, next) {
-  next(createError(404));
+  res.json({
+    status: "error",
+    message: "wrong way broo",
+    data: null
+  });
 });
 
 app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+
+
+  console.log(err)
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    status: "error",
+    message: "Internal Server Error",
+    data: null
+  });
 });
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
+});
